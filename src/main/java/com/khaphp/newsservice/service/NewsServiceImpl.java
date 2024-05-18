@@ -6,6 +6,7 @@ import com.khaphp.newsservice.call.UserServiceCall;
 import com.khaphp.newsservice.dto.NewsDTOcreate;
 import com.khaphp.newsservice.dto.NewsDTOupdate;
 import com.khaphp.newsservice.entity.News;
+import com.khaphp.newsservice.exception.ObjectNotFound;
 import com.khaphp.newsservice.repo.NewsRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -64,7 +65,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             News object = newsRepository.findById(id).orElse(null);
             if(object == null) {
-                throw new Exception(OBJECT_NOT_FOUND_MSG);
+                throw new ObjectNotFound(OBJECT_NOT_FOUND_MSG);
             }
             object.setImg(linkBucket + object.getImg());
             return ResponseObject.builder()
@@ -85,7 +86,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             UserSystem userSystem = userServiceCall.getObject(object.getEmployeeId());
             if(userSystem == null){
-                throw new Exception("user not found");
+                throw new ObjectNotFound("user not found");
             }
             News news = modelMapper.map(object, News.class);
             news.setUpdateDate(new Date(System.currentTimeMillis()));
@@ -110,7 +111,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             News object1 = newsRepository.findById(object.getId()).orElse(null);
             if(object1 == null) {
-                throw new Exception(OBJECT_NOT_FOUND_MSG);
+                throw new ObjectNotFound(OBJECT_NOT_FOUND_MSG);
             }
             object1.setTitle(object.getTitle());
             object1.setBody(object.getBody());
@@ -134,7 +135,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             News object = newsRepository.findById(id).orElse(null);
             if(object == null) {
-                throw new Exception(OBJECT_NOT_FOUND_MSG);
+                throw new ObjectNotFound(OBJECT_NOT_FOUND_MSG);
             }
             if(!object.getImg().equals(logoName)){
                 fileStore.deleteImage(object.getImg());
@@ -159,7 +160,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             News object = newsRepository.findById(id).orElse(null);
             if(object == null) {
-                throw new Exception(OBJECT_NOT_FOUND_MSG);
+                throw new ObjectNotFound(OBJECT_NOT_FOUND_MSG);
             }
             if(!object.getImg().equals(logoName)){
                 fileStore.deleteImage(object.getImg());
