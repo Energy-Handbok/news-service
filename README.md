@@ -5,7 +5,7 @@
 [![Java CI with Maven](https://github.com/Energy-Handbok/news-service/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/Energy-Handbok/news-service/actions/workflows/maven.yml)
 
 # News Service
-*Manage wallet & transaction*
+*Manage news*
 
 👉 [JaCoCo Code Coverage Report](https://energy-handbok.github.io/jacoco-report/news-service/site/jacoco/index.html) 🌱
 
