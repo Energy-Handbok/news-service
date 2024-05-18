@@ -22,6 +22,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
+    public static final String SUCCESS_MSG = "Success";
+    public static final String OBJECT_NOT_FOUND_MSG = "object not found";
+    public static final String EXCEPTION_MSG = "Exception: ";
     private final NewsRepository newsRepository;
     private final UserServiceCall userServiceCall;
     private final ModelMapper modelMapper;
@@ -50,7 +53,7 @@ public class NewsServiceImpl implements NewsService {
         }
         objList.forEach(object -> object.setImg(linkBucket + object.getImg()));
         return ResponseObject.builder()
-                .code(200).message("Success")
+                .code(200).message(SUCCESS_MSG)
                 .pageSize(objList.size()).pageIndex(pageIndex).totalPage(totalPage)
                 .data(objList)
                 .build();
@@ -61,7 +64,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             News object = newsRepository.findById(id).orElse(null);
             if(object == null) {
-                throw new Exception("object not found");
+                throw new Exception(OBJECT_NOT_FOUND_MSG);
             }
             object.setImg(linkBucket + object.getImg());
             return ResponseObject.builder()
@@ -72,7 +75,7 @@ public class NewsServiceImpl implements NewsService {
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: "+ e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
@@ -91,13 +94,13 @@ public class NewsServiceImpl implements NewsService {
             newsRepository.save(news);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .data(news)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
@@ -107,7 +110,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             News object1 = newsRepository.findById(object.getId()).orElse(null);
             if(object1 == null) {
-                throw new Exception("object not found");
+                throw new Exception(OBJECT_NOT_FOUND_MSG);
             }
             object1.setTitle(object.getTitle());
             object1.setBody(object.getBody());
@@ -115,12 +118,12 @@ public class NewsServiceImpl implements NewsService {
             newsRepository.save(object1);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
@@ -131,7 +134,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             News object = newsRepository.findById(id).orElse(null);
             if(object == null) {
-                throw new Exception("object not found");
+                throw new Exception(OBJECT_NOT_FOUND_MSG);
             }
             if(!object.getImg().equals(logoName)){
                 fileStore.deleteImage(object.getImg());
@@ -141,12 +144,12 @@ public class NewsServiceImpl implements NewsService {
             newsRepository.save(object);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
@@ -156,7 +159,7 @@ public class NewsServiceImpl implements NewsService {
         try{
             News object = newsRepository.findById(id).orElse(null);
             if(object == null) {
-                throw new Exception("object not found");
+                throw new Exception(OBJECT_NOT_FOUND_MSG);
             }
             if(!object.getImg().equals(logoName)){
                 fileStore.deleteImage(object.getImg());
@@ -164,12 +167,12 @@ public class NewsServiceImpl implements NewsService {
             newsRepository.delete(object);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
